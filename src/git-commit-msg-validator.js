@@ -4,7 +4,7 @@ const path = require('path');
 
 const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
 const END_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_END";
-const RUN_HOOK = "git-commit-msg-validator-run-hook";
+const RUN_HOOK = "./node_modules/.bin/git-commit-msg-validator-run-hook";
 
 function getPackageJson(projectPath = process.cwd()) {
     if (typeof projectPath !== "string") {
