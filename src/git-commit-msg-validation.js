@@ -96,13 +96,13 @@ function setHooks() {
     const gitRoot = getGitProjectRoot();
     const hooksDir = gitRoot + '/hooks';
     const commitMsgFilePath = hooksDir + '/commit-msg';
+    const HOOK_TEXT = "\n" + START_TEXT + "\n" + "git-commit-msg-validation-run-hook" + "\n" + END_TEXT;
 
     if(fs.existsSync(commitMsgFilePath)) {
         const commitMsgContent = fs.readFileSync(hooksDir + '/commit-msg', {encoding: "utf-8"});
-        console.log(commitMsgContent)
+        fs.writeFileSync(commitMsgFilePath, commitMsgContent + HOOK_TEXT, {encoding: 'utf-8'});
     } else {
-        const contents = START_TEXT + "\n" + "git-commit-msg-validation-run-hook" + "\n" + END_TEXT;
-        fs.writeFileSync(commitMsgFilePath, contents, {encoding: 'utf-8'});    
+        fs.writeFileSync(commitMsgFilePath, HOOK_TEXT, {encoding: 'utf-8'});
     }
 
     fs.chmodSync(commitMsgFilePath, 0o0755);
