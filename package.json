@@ -7,6 +7,14 @@
   "dependencies": {
     "chalk": "4.1.1"
   },
+  "keywords": [
+    "commit message",
+    "commit msg",
+    "git",
+    "hook",
+    "lint",
+    "linter"
+  ],
   "bin": {
     "git-commit-msg-validator": "./src/cli.js",
     "git-commit-msg-validator-run-hook": "./src/hooks.js"
