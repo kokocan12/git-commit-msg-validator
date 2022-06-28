@@ -56,8 +56,12 @@ function setMetaData(text) {
     fs.writeFileSync(packageJsonContent.packageJsonPath, JSON.stringify(packageJsonContent.packageJsonContent), {encoding: 'utf8'});
 }
 
+function getMetaData() {
+    const packageJsonContent = getPackageJson();
+    return packageJsonContent['packageJsonContent']['git-commit-msg-validation']
+}
+
 function getGitProjectRoot(directory=process.cwd()) {
-    console.log('???')
     let start = directory;
     if (typeof start === 'string') {
         if (start[start.length - 1] !== path.sep) {
@@ -97,14 +101,17 @@ function setHooks() {
         const commitMsgContent = fs.readFileSync(hooksDir + '/commit-msg', {encoding: "utf-8"});
         console.log(commitMsgContent)
     } else {
-        const contents = START_TEXT + "\n" + "exec git-commit-msg-validation-run-hook" + "\n" + END_TEXT;
+        const contents = START_TEXT + "\n" + "git-commit-msg-validation-run-hook" + "\n" + END_TEXT;
         fs.writeFileSync(commitMsgFilePath, contents, {encoding: 'utf-8'});    
     }
+
+    fs.chmodSync(commitMsgFilePath, 0o0755);
 }
 
 module.exports = { 
     isMetaDataSet,
     setMetaData,
+    getMetaData,
     isValidArrayText,
     isValidRegexp,
     setHooks
