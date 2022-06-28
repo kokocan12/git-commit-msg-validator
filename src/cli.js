@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-
 const { exit } = require('process');
 const readline = require('readline');
 const chalk = require('chalk');
+const { isHooksSet, setHooks, isValidArrayText, isValidRegexp } = require('./git-commit-msg-validation');
 
 const read = readline.createInterface({
     input: process.stdin,
@@ -60,29 +60,11 @@ function renderSelect() {
     currentSelect = nextSelect;
 }
 
-function isValidArrayText(text) {
-    try {
-        const obj = JSON.parse(text);
-        return Array.isArray(obj);
-    } catch(e) {
-        return false;
-    }
-}
-
-function isValidRegexp(text) {
-    try {
-        const regexp = new RegExp(text);
-
-        return regexp;
-    } catch(e) {
-        return false;
-    }
-}
-
 function readTypeValue() {
     read.question('', (input) => {
         if(isValidArrayText(input)) {
             textValue = input;
+            setHooks(textValue);
             read.close();
             exit();
         } else {
@@ -96,6 +78,7 @@ function readRegexpValue() {
     read.question('', (input) => {
         if(isValidRegexp(input)) {
             textValue = input;
+            setHooks(textValue);
             read.close();
             exit();
         } else {
@@ -105,38 +88,42 @@ function readRegexpValue() {
     });
 }
 
-process.stdout.write(TEXT.select);
-process.stdout.write(TEXT.option1);
-process.stdin.on('keypress', (_, key) => {
+function init() {
+    process.stdout.write(TEXT.select);
+    process.stdout.write(TEXT.option1);
+    process.stdin.on('keypress', (_, key) => {
 
-    if(currentMode !== MODE.selectMode) return;
+        if(currentMode !== MODE.selectMode) return;
 
-
-    if(key.sequence === KEY.up || key.sequence === KEY.left) {
-        nextSelect = 0;
-        renderSelect();
-    }
-    else if(key.sequence === KEY.down || key.sequence === KEY.right) {
-        nextSelect = 1;
-        renderSelect();
-    }
-    else if(key.sequence === KEY.enter) {
-        currentMode = MODE.typeMode;
-        if(currentSelect === 0) {
-            process.stdout.write(TEXT.selectComplete1);
-            process.stdout.write(TEXT.typeSelection);
-            readTypeValue()
-        } else if(currentSelect === 1) {
-            process.stdout.write(TEXT.selectComplete2);
-            process.stdout.write(TEXT.regexpSelection);
-            readRegexpValue()
+        if(key.sequence === KEY.up || key.sequence === KEY.left) {
+            nextSelect = 0;
+            renderSelect();
         }
-        return;
-    }
-    else if(key.sequence === KEY.ctrlC) exit();
-});
+        else if(key.sequence === KEY.down || key.sequence === KEY.right) {
+            nextSelect = 1;
+            renderSelect();
+        }
+        else if(key.sequence === KEY.enter) {
+            currentMode = MODE.typeMode;
+            if(currentSelect === 0) {
+                process.stdout.write(TEXT.selectComplete1);
+                process.stdout.write(TEXT.typeSelection);
+                readTypeValue()
+            } else if(currentSelect === 1) {
+                process.stdout.write(TEXT.selectComplete2);
+                process.stdout.write(TEXT.regexpSelection);
+                readRegexpValue()
+            }
+            return;
+        }
+        else if(key.sequence === KEY.ctrlC) exit();
+    });
+}
 
 
-module.exports = {
-    textValue
+if(!isHooksSet()) {
+    // setHooks
+    init();
+} else {
+    exit();
 }
