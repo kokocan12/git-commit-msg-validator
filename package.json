@@ -1,7 +1,7 @@
 {
   "name": "git-commit-msg-validator",
   "version": "1.0.2",
-  "description": "This is simple git commit message validator.",
+  "description": "This is simple a git commit message validator.",
   "author": "kokocan12 <dlgudwnsl1234@gmail.com>",
   "license": "MIT",
   "dependencies": {
