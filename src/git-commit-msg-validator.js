@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 
-const START_TEXT = "# GIT_COMMIT_MSG_VALIDATION_START";
-const END_TEXT = "# GIT_COMMIT_MSG_VALIDATION_END"
+const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
+const END_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_END";
 
 function getPackageJson(projectPath = process.cwd()) {
     if (typeof projectPath !== "string") {
@@ -92,11 +92,25 @@ function getGitProjectRoot(directory=process.cwd()) {
     }
 }
 
+function getCommitMsg() {
+    const gitRoot = getGitProjectRoot();
+    const commitMsgFile = gitRoot + '/' + 'COMMIT_EDITMSG';
+
+    if(fs.existsSync(commitMsgFile)) {
+        const commitMsg = fs.readFileSync(commitMsgFile, {encoding:'utf-8'});
+
+        return commitMsg;
+    }
+
+    return "";
+}
+
 function setHooks() {
     const gitRoot = getGitProjectRoot();
     const hooksDir = gitRoot + '/hooks';
     const commitMsgFilePath = hooksDir + '/commit-msg';
-    const HOOK_TEXT = "\n" + START_TEXT + "\n" + "git-commit-msg-validation-run-hook" + "\n" + END_TEXT;
+    
+    const HOOK_TEXT = "\n" + START_TEXT + "\n" + "git-commit-msg-validation-run-hook" + "\n" + END_TEXT + "\n";
 
     if(fs.existsSync(commitMsgFilePath)) {
         const commitMsgContent = fs.readFileSync(hooksDir + '/commit-msg', {encoding: "utf-8"});
@@ -114,5 +128,6 @@ module.exports = {
     getMetaData,
     isValidArrayText,
     isValidRegexp,
-    setHooks
+    setHooks,
+    getCommitMsg
 }
