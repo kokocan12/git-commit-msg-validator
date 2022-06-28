@@ -42,7 +42,7 @@ function isValidRegexp(text) {
 function isMetaDataSet() {
     const packageJsonContent = getPackageJson();
 
-    return !!packageJsonContent['packageJsonContent']['git-commit-msg-validation'];
+    return !!packageJsonContent['packageJsonContent']['git-commit-msg-validator'];
 }
 
 /**
@@ -52,13 +52,13 @@ function isMetaDataSet() {
  */
 function setMetaData(text) {
     const packageJsonContent = getPackageJson();
-    packageJsonContent['packageJsonContent']['git-commit-msg-validation'] = text;
+    packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = text;
     fs.writeFileSync(packageJsonContent.packageJsonPath, JSON.stringify(packageJsonContent.packageJsonContent), {encoding: 'utf8'});
 }
 
 function getMetaData() {
     const packageJsonContent = getPackageJson();
-    return packageJsonContent['packageJsonContent']['git-commit-msg-validation']
+    return packageJsonContent['packageJsonContent']['git-commit-msg-validator']
 }
 
 function getGitProjectRoot(directory=process.cwd()) {
@@ -110,7 +110,7 @@ function setHooks() {
     const hooksDir = gitRoot + '/hooks';
     const commitMsgFilePath = hooksDir + '/commit-msg';
     
-    const HOOK_TEXT = "\n" + START_TEXT + "\n" + "git-commit-msg-validation-run-hook" + "\n" + END_TEXT + "\n";
+    const HOOK_TEXT = "\n" + START_TEXT + "\n" + "git-commit-msg-validator-run-hook" + "\n" + END_TEXT + "\n";
 
     if(fs.existsSync(commitMsgFilePath)) {
         const commitMsgContent = fs.readFileSync(hooksDir + '/commit-msg', {encoding: "utf-8"});
