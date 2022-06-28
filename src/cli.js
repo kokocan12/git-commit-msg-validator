@@ -2,7 +2,7 @@
 const { exit } = require('process');
 const readline = require('readline');
 const chalk = require('chalk');
-const { isMetaDataSet, setMetaData, isValidArrayText, isValidRegexp } = require('./git-commit-msg-validation');
+const { isMetaDataSet, setMetaData, isValidArrayText, isValidRegexp, setHooks } = require('./git-commit-msg-validation');
 
 const read = readline.createInterface({
     input: process.stdin,
@@ -65,6 +65,7 @@ function readTypeValue() {
         if(isValidArrayText(input)) {
             textValue = input;
             setMetaData(textValue);
+            setHooks();
             read.close();
             exit();
         } else {
@@ -79,6 +80,7 @@ function readRegexpValue() {
         if(isValidRegexp(input)) {
             textValue = input;
             setMetaData(textValue);
+            setHooks();
             read.close();
             exit();
         } else {
@@ -122,8 +124,13 @@ function init() {
 
 
 if(!isMetaDataSet()) {
-    // setHooks
+    // setMetaData
     init();
 } else {
+    // setHooks
+    setHooks()
     exit();
 }
+
+
+

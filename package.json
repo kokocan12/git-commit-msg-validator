@@ -6,7 +6,10 @@
   "dependencies": {
     "chalk": "4.1.1"
   },
-  "bin": "./src/cli.js",
+  "bin": {
+    "git-commit-msg-validation": "./src/cli.js",
+    "git-commit-msg-validation-run-hook": "./src/hooks.js"
+  },
   "files": [
     "src"
   ],
