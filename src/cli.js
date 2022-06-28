@@ -91,7 +91,7 @@ function readRegexpValue() {
 }
 
 function init() {
-    process.stdout.write(TEXT.select);
+    process.stdout.write("\n" + TEXT.select);
     process.stdout.write(TEXT.option1);
     process.stdin.on('keypress', (_, key) => {
 
