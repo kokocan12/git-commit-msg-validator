@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { exit } = require('process');
 const readline = require('readline');
 const chalk = require('chalk');
