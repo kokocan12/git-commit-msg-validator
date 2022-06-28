@@ -4,6 +4,7 @@ const path = require('path');
 
 const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
 const END_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_END";
+const RUN_HOOK = "git-commit-msg-validator-run-hook";
 
 function getPackageJson(projectPath = process.cwd()) {
     if (typeof projectPath !== "string") {
@@ -110,11 +111,21 @@ function setHooks() {
     const hooksDir = gitRoot + '/hooks';
     const commitMsgFilePath = hooksDir + '/commit-msg';
     
-    const HOOK_TEXT = "\n" + START_TEXT + "\n" + "git-commit-msg-validator-run-hook" + "\n" + END_TEXT + "\n";
+    const HOOK_TEXT = "\n" + START_TEXT + "\n" + RUN_HOOK + "\n" + END_TEXT + "\n";
 
     if(fs.existsSync(commitMsgFilePath)) {
         const commitMsgContent = fs.readFileSync(hooksDir + '/commit-msg', {encoding: "utf-8"});
-        fs.writeFileSync(commitMsgFilePath, commitMsgContent + HOOK_TEXT, {encoding: 'utf-8'});
+
+        const startIdx = commitMsgContent.indexOf(START_TEXT);
+        const endIdx = commitMsgContent.indexOf(END_TEXT);
+
+        if(startIdx !== -1 && endIdx !== -1) {
+            const innerText = commitMsgContent.slice(startIdx + START_TEXT.length, endIdx);
+            const newContent = commitMsgContent.replace(innerText, "\n" + RUN_HOOK + "\n");
+            fs.writeFileSync(commitMsgFilePath, newContent, {encoding: 'utf-8'});
+        } else {
+            fs.writeFileSync(commitMsgFilePath, commitMsgContent + HOOK_TEXT, {encoding: 'utf-8'});
+        }
     } else {
         fs.writeFileSync(commitMsgFilePath, HOOK_TEXT, {encoding: 'utf-8'});
     }
