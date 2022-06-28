@@ -1,6 +1,6 @@
 {
   "name": "git-commit-msg-validator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This is a simple git commit message validator.",
   "author": "kokocan12 <dlgudwnsl1234@gmail.com>",
   "license": "MIT",
@@ -15,6 +15,7 @@
     "lint",
     "linter"
   ],
+  "repository": "kokocan12/git-commit-msg-validator",
   "bin": {
     "git-commit-msg-validator": "./src/cli.js",
     "git-commit-msg-validator-run-hook": "./src/hooks.js"
