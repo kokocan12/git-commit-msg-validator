@@ -1,12 +1,12 @@
 {
   "name": "git-commit-msg-validation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is simple git commit message validator.",
   "license": "MIT",
   "dependencies": {
     "chalk": "4.1.1"
   },
-  "bin": "./cli.js",
+  "bin": "./src/cli.js",
   "files": [
     "src"
   ]
