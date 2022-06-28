@@ -62,10 +62,14 @@ That's it, Entered types are inserted into package.json automatically.
 ```
 
 After, git hooks registered.
+Test your commit messages.
 
 ```sh
 $git add .
-$git commit -m "commit test"
+$git commit -m "commit test" // You will see error.
+
+$git commit -m "[fix-bug] fix bugs text input : fix no response bugs in input component." 
+// The fix has been committed.
 ```
 
 # License 
