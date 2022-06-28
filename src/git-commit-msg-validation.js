@@ -35,7 +35,7 @@ function isValidRegexp(text) {
     }
 }
 
-function isHooksSet() {
+function isMetaDataSet() {
     const packageJsonContent = _getPackageJson();
 
     return !!packageJsonContent['packageJsonContent']['git-commit-msg-validation'];
@@ -46,15 +46,15 @@ function isHooksSet() {
  * Need fix JSON.stringify() part. 
  * It converts JSON object to ugly one line text now.
  */
-function setHooks(text) {
+function setMetaData(text) {
     const packageJsonContent = _getPackageJson();
     packageJsonContent['packageJsonContent']['git-commit-msg-validation'] = text;
     fs.writeFileSync(packageJsonContent.packageJsonPath, JSON.stringify(packageJsonContent.packageJsonContent), {encoding: 'utf8'});
 }
 
 module.exports = { 
-    isHooksSet,
-    setHooks,
+    isMetaDataSet,
+    setMetaData,
     isValidArrayText,
     isValidRegexp
 }

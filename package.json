@@ -9,5 +9,8 @@
   "bin": "./src/cli.js",
   "files": [
     "src"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^8.18.0"
+  }
 }
