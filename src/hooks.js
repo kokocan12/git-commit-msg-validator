@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk');
-const { getMetaData, isValidArrayText, isValidRegexp } = require('./git-commit-msg-validation')
+const { getMetaData, isValidArrayText, isValidRegexp } = require('./git-commit-msg-validator')
 const commitMsg = process.argv[2];
 
 const INVALID_COMMIT_MESSAGE = chalk.red.bold("Invalid Commit Message");

@@ -2,7 +2,7 @@
 const { exit } = require('process');
 const readline = require('readline');
 const chalk = require('chalk');
-const { isMetaDataSet, setMetaData, isValidArrayText, isValidRegexp, setHooks } = require('./git-commit-msg-validation');
+const { isMetaDataSet, setMetaData, isValidArrayText, isValidRegexp, setHooks } = require('./git-commit-msg-validator');
 
 const read = readline.createInterface({
     input: process.stdin,
