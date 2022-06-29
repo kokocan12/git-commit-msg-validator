@@ -5,7 +5,8 @@
   "author": "kokocan12 <dlgudwnsl1234@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "chalk": "4.1.1"
+    "chalk": "4.1.1",
+    "prettier": "^2.7.1"
   },
   "keywords": [
     "commit message",

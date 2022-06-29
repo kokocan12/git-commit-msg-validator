@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const prettier = require('prettier');
 
 
 const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
@@ -49,29 +50,12 @@ function isMetaDataSet() {
     return !!packageJsonContent['packageJsonContent']['git-commit-msg-validator'];
 }
 
-/**
- * @todos
- * Need fix JSON.stringify() part. 
- * It converts JSON object to ugly one line text now.
- */
 function setMetaData(text, rootPath) {
     const packageJsonContent = getPackageJson(rootPath);
 
     packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = text;
-    const contents = JSON.stringify(packageJsonContent.packageJsonContent);
+    const contents = prettier.format(JSON.stringify(packageJsonContent.packageJsonContent), {parser : 'json'});
     fs.writeFileSync(packageJsonContent.packageJsonPath, contents, {encoding: 'utf8'});
-
-    /*
-    if(isValidArrayText(text)) {
-        packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = text;
-        const contents = JSON.stringify(packageJsonContent.packageJsonContent);
-        fs.writeFileSync(packageJsonContent.packageJsonPath, contents, {encoding: 'utf8'});
-    } else {
-        packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = UNIQUE_TEXT;
-        const contents = JSON.stringify(packageJsonContent.packageJsonContent).replace(UNIQUE_TEXT, text);
-        fs.writeFileSync(packageJsonContent.packageJsonPath, contents, {encoding: 'utf8'});
-    }
-    */
 }
 
 function getMetaData(rootPath) {
