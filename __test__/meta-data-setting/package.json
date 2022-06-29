@@ -6,5 +6,5 @@
   "scripts": { "postinstall": "git-commit-msg-validator" },
   "dependencies": { "git-commit-msg-validator": "^1.0.4" },
   "git-commit-msg-validator": "/^\\[[\\S]+\\] [\\S\\s]+\\s:\\s[\\S\\s]+/",
-  "devDependencies": { "git-commit-msg-validator": "^1.0.7" }
+  "devDependencies": { "git-commit-msg-validator": "^1.1.1" }
 }

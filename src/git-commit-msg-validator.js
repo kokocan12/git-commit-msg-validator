@@ -6,7 +6,7 @@ const prettier = require('prettier');
 const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
 const END_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_END";
 const RUN_HOOK = "./node_modules/.bin/git-commit-msg-validator-run-hook";
-const VERSION = "1.1.1"
+const VERSION = "1.1.2"
 
 function getPackageJson(projectPath = process.cwd()) {
     if (typeof projectPath !== "string") {
@@ -112,7 +112,7 @@ function getGitProjectRoot(directory=process.cwd()) {
 
 function getCommitMsg() {
     const gitRoot = getGitProjectRoot();
-    const commitMsgFile = gitRoot + '/' + 'COMMIT_EDITMSG';
+    const commitMsgFile = path.join(gitRoot, 'COMMIT_EDITMSG');
 
     if(fs.existsSync(commitMsgFile)) {
         const commitMsg = fs.readFileSync(commitMsgFile, {encoding:'utf-8'});
@@ -125,13 +125,13 @@ function getCommitMsg() {
 
 function setHooks() {
     const gitRoot = getGitProjectRoot();
-    const hooksDir = gitRoot + '/hooks';
-    const commitMsgFilePath = hooksDir + '/commit-msg';
+    const hooksDir = path.join(gitRoot, 'hooks');
+    const commitMsgFilePath = path.join(hooksDir, '/commit-msg');
     
     const HOOK_TEXT = "\n" + START_TEXT + "\n" + RUN_HOOK + "\n" + END_TEXT + "\n";
 
     if(fs.existsSync(commitMsgFilePath)) {
-        const commitMsgContent = fs.readFileSync(hooksDir + '/commit-msg', {encoding: "utf-8"});
+        const commitMsgContent = fs.readFileSync(commitMsgFilePath, {encoding: "utf-8"});
 
         const startIdx = commitMsgContent.indexOf(START_TEXT);
         const endIdx = commitMsgContent.indexOf(END_TEXT);
