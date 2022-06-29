@@ -24,8 +24,8 @@ $npx git-commit-msg-validator
 Select mode what you will use. <br/>
 And enter types what you want to use.
 
-That's it. 
-Entered types are inserted into package.json.
+That's it.<br/>
+Entered types are inserted into package.json.<br/>
 And scripts, devDependencies, symbolic link of git hooks are created automatically.
 ```json
 {
