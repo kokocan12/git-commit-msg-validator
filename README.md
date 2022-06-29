@@ -14,30 +14,9 @@ You can insert your own types into package.json using CLI.
 Using regular expression mode, commit messages of your project are tested by regular expression you insert.
 
 # Usage
-First, you add package into your project.
+First, you add package info, meta data into your package.json.
 ```sh
-$yarn add git-commit-msg-validator
-```
-
-Then, add **"git-commit-msg-validator"** to scripts > postinstall in your package.json.
-```json
-{
-  "name": "test",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "postinstall": "git-commit-msg-validator"
-  },
-  "dependencies": {
-    "git-commit-msg-validator": "^1.0.2"
-  }
-}
-```
-
-Then, **yarn** again
-```sh
-$yarn
+$npx git-commit-msg-validator
 ```
 
 ![image](https://user-images.githubusercontent.com/49009864/176138559-89f5ff6b-2094-4363-848b-538f4c8c27e6.png)
@@ -45,7 +24,9 @@ $yarn
 Select mode what you will use. <br/>
 And enter types what you want to use.
 
-That's it, Entered types are inserted into package.json automatically.
+That's it. 
+Entered types are inserted into package.json.
+And scripts, devDependencies, symbolic link of git hooks are created automatically.
 ```json
 {
   "name": "test",
@@ -55,7 +36,7 @@ That's it, Entered types are inserted into package.json automatically.
   "scripts": {
     "postinstall": "git-commit-msg-validator"
   },
-  "dependencies": {
+  "devDependencies": {
     "git-commit-msg-validator": "^1.0.2"
   },
   "git-commit-msg-validator": "[\"new-feature\", \"fix-bug\", \"update\", \"modify\"]"
