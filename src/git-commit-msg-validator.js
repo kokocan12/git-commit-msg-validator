@@ -6,7 +6,8 @@ const prettier = require('prettier');
 const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
 const END_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_END";
 const RUN_HOOK = "./node_modules/.bin/git-commit-msg-validator-run-hook";
-const VERSION = "1.1.2"
+const SHE_BANG = "#!/bin/sh";
+const VERSION = "1.1.3"
 
 function getPackageJson(projectPath = process.cwd()) {
     if (typeof projectPath !== "string") {
@@ -131,10 +132,15 @@ function setHooks() {
     const HOOK_TEXT = "\n" + START_TEXT + "\n" + RUN_HOOK + "\n" + END_TEXT + "\n";
 
     if(fs.existsSync(commitMsgFilePath)) {
-        const commitMsgContent = fs.readFileSync(commitMsgFilePath, {encoding: "utf-8"});
+        let commitMsgContent = fs.readFileSync(commitMsgFilePath, {encoding: "utf-8"});
 
         const startIdx = commitMsgContent.indexOf(START_TEXT);
         const endIdx = commitMsgContent.indexOf(END_TEXT);
+
+        // If there is no SHE_BANG.
+        if(commitMsgContent.indexOf(SHE_BANG) === -1) {
+            commitMsgContent = SHE_BANG + '\n' + commitMsgContent;
+        }
 
         if(startIdx !== -1 && endIdx !== -1) {
             const innerText = commitMsgContent.slice(startIdx + START_TEXT.length, endIdx);
@@ -144,7 +150,7 @@ function setHooks() {
             fs.writeFileSync(commitMsgFilePath, commitMsgContent + HOOK_TEXT, {encoding: 'utf-8'});
         }
     } else {
-        fs.writeFileSync(commitMsgFilePath, HOOK_TEXT, {encoding: 'utf-8'});
+        fs.writeFileSync(commitMsgFilePath, SHE_BANG + HOOK_TEXT, {encoding: 'utf-8'});
     }
 
     fs.chmodSync(commitMsgFilePath, 0o0755);
