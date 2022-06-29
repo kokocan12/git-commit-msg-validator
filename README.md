@@ -2,15 +2,15 @@
 This is simple git commit message validator.
 
 # Feature
-You can force git commit message format using this.<br/>
+You can force git commit message format with this.<br/>
 There are two modes.
 
-1. Types Mode
-Using this mode, commit message format of your project is forced like [{TYPE}] {TITLE} : {DESCRIPTION}.</br>
+1. Types Mode <br/>
+Using types mode, commit message format of your project is forced like [{TYPE}] {TITLE} : {DESCRIPTION}.</br>
 You insert your own types in package.json using CLI.
 
-2. Regular Expression Mode
-Using Regular expression mode, commit message format of your project should be tested by regular expression you insert.
+2. Regular Expression Mode <br/>
+Using regular expression mode, commit message format of your project should be tested by regular expression you insert.
 
 # Usage
 First, you add package into your project.
