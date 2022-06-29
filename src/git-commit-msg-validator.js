@@ -5,7 +5,6 @@ const path = require('path');
 const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
 const END_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_END";
 const RUN_HOOK = "./node_modules/.bin/git-commit-msg-validator-run-hook";
-const UNIQUE_TEXT = "T#H#I#S_I#S_U#N#I#Q#U#E_T#E#X#T";
 
 function getPackageJson(projectPath = process.cwd()) {
     if (typeof projectPath !== "string") {
@@ -33,7 +32,10 @@ function isValidArrayText(text) {
 
 function isValidRegexp(text) {
     try {
-        const regexp = new RegExp(text);
+
+        if(text[0] !== '/') return false;
+
+        const regexp = eval(text);
 
         return regexp;
     } catch(e) {
@@ -54,15 +56,27 @@ function isMetaDataSet() {
  */
 function setMetaData(text, rootPath) {
     const packageJsonContent = getPackageJson(rootPath);
-    packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = UNIQUE_TEXT;
-    const contents = JSON.stringify(packageJsonContent.packageJsonContent).replace(UNIQUE_TEXT, text);
 
+    packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = text;
+    const contents = JSON.stringify(packageJsonContent.packageJsonContent);
     fs.writeFileSync(packageJsonContent.packageJsonPath, contents, {encoding: 'utf8'});
+
+    /*
+    if(isValidArrayText(text)) {
+        packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = text;
+        const contents = JSON.stringify(packageJsonContent.packageJsonContent);
+        fs.writeFileSync(packageJsonContent.packageJsonPath, contents, {encoding: 'utf8'});
+    } else {
+        packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = UNIQUE_TEXT;
+        const contents = JSON.stringify(packageJsonContent.packageJsonContent).replace(UNIQUE_TEXT, text);
+        fs.writeFileSync(packageJsonContent.packageJsonPath, contents, {encoding: 'utf8'});
+    }
+    */
 }
 
 function getMetaData(rootPath) {
     const packageJsonContent = getPackageJson(rootPath);
-    return packageJsonContent['packageJsonContent']['git-commit-msg-validator']
+    return packageJsonContent['packageJsonContent']['git-commit-msg-validator'].replace(/\\\\/gi, '\\');
 }
 
 function getGitProjectRoot(directory=process.cwd()) {

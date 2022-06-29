@@ -19,16 +19,35 @@ const DEFAULT_PACKAGEJSON_CONTENT = `{
 describe('Test for meta-data setting', () => {
 
     beforeEach(() => {
-        //const packageJsonContent = getPackageJson(ROOT_PATH);
-        //fs.writeFileSync(packageJsonContent.packageJsonPath, DEFAULT_PACKAGEJSON_CONTENT, {encoding: 'utf8'});
+        const packageJsonContent = getPackageJson(ROOT_PATH);
+        fs.writeFileSync(packageJsonContent.packageJsonPath, DEFAULT_PACKAGEJSON_CONTENT, {encoding: 'utf8'});
     })
 
-    test('Set regular expression', () => {
-        const text = "12345";
+    test('normal text', () => {
+        const text = "1232891245";
 
-        ///setMetaData(text, ROOT_PATH);
+        setMetaData(text, ROOT_PATH);
         const metaData = getMetaData(ROOT_PATH);
 
-        console.log(text, metaData);
+        expect(text).toBe(metaData);
     });
+
+    test('array text', () => {
+      const text = `["update", "fix"]`;
+
+      setMetaData(text, ROOT_PATH);
+      const metaData = getMetaData(ROOT_PATH);
+
+      
+      expect(text).toBe(metaData);
+    })
+
+    test('regexp text', () => {
+      const text = /^\[[\S]+\] [\S\s]+\s:\s[\S\s]+/.toString();
+
+      setMetaData(text, ROOT_PATH);
+      const metaData = getMetaData(ROOT_PATH);
+
+      expect(text).toBe(metaData);
+    })
 });

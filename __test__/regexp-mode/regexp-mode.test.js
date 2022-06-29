@@ -8,7 +8,6 @@ describe('Test for regexp-mode', () => {
     beforeEach(() => {
         const meta = getMetaData(ROOT_PATH);
         regexp = isValidRegexp(meta);
-
     })
 
     test('Not valid message format', () => {
@@ -17,4 +16,9 @@ describe('Test for regexp-mode', () => {
         expect(regexp.test(commitMsg)).toBe(false);
     });
 
-})
+    test('Valid message format', () => {
+        const commitMsg = "[test] test : test";
+
+        expect(regexp.test(commitMsg)).toBe(true);
+    })
+});

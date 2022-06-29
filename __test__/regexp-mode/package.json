@@ -11,4 +11,6 @@
     },
     "git-commit-msg-validator": "/^\\[[\\S]+\\] [\\S\\s]+\\s:\\s[\\S\\s]+/"
   }
+
+  
   

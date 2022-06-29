@@ -24,7 +24,7 @@
     "src"
   ],
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --config=jest.config.js"
   },
   "devDependencies": {
     "eslint": "^8.18.0",
