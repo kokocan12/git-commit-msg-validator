@@ -68,6 +68,7 @@ function readTypeValue() {
             textValue = input;
             setMetaData(textValue);
             setHooks();
+            exec("npm install");
             read.close();
             exit();
         } else {
@@ -83,6 +84,7 @@ function readRegexpValue() {
             textValue = input;
             setMetaData(textValue);
             setHooks();
+            exec("npm install");
             read.close();
             exit();
         } else {
@@ -128,7 +130,6 @@ function init() {
 if(!isMetaDataSet()) {
     // setMetaData
     init();
-    exec("npm install");
 } else {
     // setGitHooks
     setHooks()
