@@ -1,0 +1,1 @@
+{"name":"test","version":"1.0.0","main":"index.js","license":"MIT","scripts":{"postinstall":"git-commit-msg-validator"},"dependencies":{"git-commit-msg-validator":"^1.0.4"},"git-commit-msg-validator":"12345"}

@@ -1,5 +1,5 @@
 const { getMetaData, isValidRegexp } = require('../../src/git-commit-msg-validator');
-const ROOT_PATH = './__test__/types-mode';
+const ROOT_PATH = './__test__/regexp-mode';
 
 
 describe('Test for regexp-mode', () => {
@@ -8,6 +8,7 @@ describe('Test for regexp-mode', () => {
     beforeEach(() => {
         const meta = getMetaData(ROOT_PATH);
         regexp = isValidRegexp(meta);
+
     })
 
     test('Not valid message format', () => {

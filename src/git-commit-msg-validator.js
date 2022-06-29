@@ -5,6 +5,7 @@ const path = require('path');
 const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
 const END_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_END";
 const RUN_HOOK = "./node_modules/.bin/git-commit-msg-validator-run-hook";
+const UNIQUE_TEXT = "T#H#I#S_I#S_U#N#I#Q#U#E_T#E#X#T";
 
 function getPackageJson(projectPath = process.cwd()) {
     if (typeof projectPath !== "string") {
@@ -51,10 +52,12 @@ function isMetaDataSet() {
  * Need fix JSON.stringify() part. 
  * It converts JSON object to ugly one line text now.
  */
-function setMetaData(text) {
-    const packageJsonContent = getPackageJson();
-    packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = text;
-    fs.writeFileSync(packageJsonContent.packageJsonPath, JSON.stringify(packageJsonContent.packageJsonContent), {encoding: 'utf8'});
+function setMetaData(text, rootPath) {
+    const packageJsonContent = getPackageJson(rootPath);
+    packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = UNIQUE_TEXT;
+    const contents = JSON.stringify(packageJsonContent.packageJsonContent).replace(UNIQUE_TEXT, text);
+
+    fs.writeFileSync(packageJsonContent.packageJsonPath, contents, {encoding: 'utf8'});
 }
 
 function getMetaData(rootPath) {
@@ -140,5 +143,6 @@ module.exports = {
     isValidArrayText,
     isValidRegexp,
     setHooks,
-    getCommitMsg
+    getCommitMsg,
+    getPackageJson
 }
