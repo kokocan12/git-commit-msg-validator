@@ -68,7 +68,7 @@ Test your commit messages.
 $git add .
 $git commit -m "commit test" // You will see error.
 
-$git commit -m "[fix-bug] fix bugs text input : fix no response bugs in input component." 
+$git commit -m "[fix-bug] fix bugs in text input : fix no response bugs in input component." 
 // The fix has been committed.
 ```
 
