@@ -36,7 +36,7 @@ const TEXT = {
     typeSelection: chalk.green.bold('2. Please, insert types what you use. ex) ["fix", "update", "feat"]\n'),
     regexpSelection: chalk.green.bold('2. Please, insert regexp what you use. ex) /[0-9]+/ \n'),
     wrongText: " is not valid text format, please try again.\n",
-    alreadySet: chalk.yellow.bold("\ngit-commit-msg-validator property is already set in package.json\n")
+    alreadyInstalled: chalk.yellow.bold("\ngit-commit-msg-validator is already installed in package.json\n")
 }
 
 let currentSelect = 0;
@@ -133,7 +133,7 @@ if(!isMetaDataSet()) {
 } else {
     // setGitHooks
     setHooks()
-    process.stdout.write(TEXT.alreadySet);
+    process.stdout.write(TEXT.alreadyInstalled);
     exit();
 }
 
