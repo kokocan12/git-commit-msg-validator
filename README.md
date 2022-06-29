@@ -7,7 +7,7 @@ There are two modes.
 
 1. Types Mode <br/>
 Using types mode, commit message format of your project is forced like [{TYPE}] {TITLE} : {DESCRIPTION}.</br>
-You can insert your own types in package.json using CLI.
+You can insert your own types into package.json using CLI.
 
 2. Regular Expression Mode <br/>
 Using regular expression mode, commit messages of your project are tested by regular expression you insert.
