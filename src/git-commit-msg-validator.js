@@ -57,8 +57,8 @@ function setMetaData(text) {
     fs.writeFileSync(packageJsonContent.packageJsonPath, JSON.stringify(packageJsonContent.packageJsonContent), {encoding: 'utf8'});
 }
 
-function getMetaData() {
-    const packageJsonContent = getPackageJson();
+function getMetaData(rootPath) {
+    const packageJsonContent = getPackageJson(rootPath);
     return packageJsonContent['packageJsonContent']['git-commit-msg-validator']
 }
 
