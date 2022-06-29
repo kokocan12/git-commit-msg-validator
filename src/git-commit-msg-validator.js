@@ -6,6 +6,7 @@ const prettier = require('prettier');
 const START_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_START";
 const END_TEXT = "# GIT_COMMIT_MSG_VALIDATOR_END";
 const RUN_HOOK = "./node_modules/.bin/git-commit-msg-validator-run-hook";
+const VERSION = "1.0.7"
 
 function getPackageJson(projectPath = process.cwd()) {
     if (typeof projectPath !== "string") {
@@ -52,8 +53,23 @@ function isMetaDataSet() {
 
 function setMetaData(text, rootPath) {
     const packageJsonContent = getPackageJson(rootPath);
-
     packageJsonContent['packageJsonContent']['git-commit-msg-validator'] = text;
+    if(packageJsonContent['packageJsonContent']['devDependencies'] === undefined) {
+        packageJsonContent['packageJsonContent']['devDependencies'] = {};
+    }
+    if(packageJsonContent['packageJsonContent']['scripts'] === undefined) {
+        packageJsonContent['packageJsonContent']['scripts'] = {};
+    }
+    if(packageJsonContent['packageJsonContent']['devDependencies']["git-commit-msg-validator"] === undefined) {
+        packageJsonContent['packageJsonContent']['devDependencies']["git-commit-msg-validator"] = "^" + VERSION;
+    }
+    if(packageJsonContent['packageJsonContent']['scripts']['postinstall']) {
+        if(!packageJsonContent['packageJsonContent']['scripts']['postinstall'].includes('git-commit-msg-validator')) {
+            packageJsonContent['packageJsonContent']['scripts']['postinstall'] += " & git-commit-msg-validator";
+        }
+    } else {
+        packageJsonContent['packageJsonContent']['scripts']['postinstall'] = 'git-commit-msg-validator';
+    }
     const contents = prettier.format(JSON.stringify(packageJsonContent.packageJsonContent), {parser : 'json'});
     fs.writeFileSync(packageJsonContent.packageJsonPath, contents, {encoding: 'utf8'});
 }

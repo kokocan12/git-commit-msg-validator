@@ -3,6 +3,7 @@ const { exit } = require('process');
 const readline = require('readline');
 const chalk = require('chalk');
 const { isMetaDataSet, setMetaData, isValidArrayText, isValidRegexp, setHooks } = require('./git-commit-msg-validator');
+const { exec } = require('child_process');
 
 const read = readline.createInterface({
     input: process.stdin,
@@ -34,7 +35,8 @@ const TEXT = {
     selectComplete2: chalk.yellow("You selected regexp mode.\n"),
     typeSelection: chalk.green.bold('2. Please, insert types what you use. ex) ["fix", "update", "feat"]\n'),
     regexpSelection: chalk.green.bold('2. Please, insert regexp what you use. ex) /[0-9]+/ \n'),
-    wrongText: " is not valid text format, please try again.\n"
+    wrongText: " is not valid text format, please try again.\n",
+    alreadySet: chalk.yellow.bold("\ngit-commit-msg-validator property is already set in package.json\n")
 }
 
 let currentSelect = 0;
@@ -126,9 +128,11 @@ function init() {
 if(!isMetaDataSet()) {
     // setMetaData
     init();
+    exec("npm install");
 } else {
-    // setHooks
+    // setGitHooks
     setHooks()
+    process.stdout.write(TEXT.alreadySet);
     exit();
 }
 
