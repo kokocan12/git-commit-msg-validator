@@ -1,4 +1,4 @@
-# git-commit-msg-validator
+# git-commit-msg-validator [![Node.js CI](https://github.com/kokocan12/git-commit-msg-validator/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/kokocan12/git-commit-msg-validator/actions/workflows/node.js.yml)
 This is simple git commit message validator.
 
 # Feature
