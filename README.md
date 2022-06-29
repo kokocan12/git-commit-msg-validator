@@ -18,7 +18,7 @@ First, you add package into your project.
 $yarn add git-commit-msg-validator
 ```
 
-Then, add **"git-commit-msg-validator"** to scripts > postinstall.
+Then, add **"git-commit-msg-validator"** to scripts > postinstall in your package.json.
 ```json
 {
   "name": "test",
