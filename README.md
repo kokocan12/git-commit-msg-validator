@@ -10,7 +10,7 @@ Using types mode, commit message format of your project is forced like [{TYPE}] 
 You can insert your own types in package.json using CLI.
 
 2. Regular Expression Mode <br/>
-Using regular expression mode, commit message format of your project should be tested by regular expression you insert.
+Using regular expression mode, commit messages of your project are tested by regular expression you insert.
 
 # Usage
 First, you add package into your project.
